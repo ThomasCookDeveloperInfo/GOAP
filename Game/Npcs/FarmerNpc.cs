@@ -6,7 +6,11 @@ public class FarmerNpc : MonoBehaviour, Agent {
     private readonly float speed = 1.0f;
     private readonly GoapPlanner planner = new GoapPlanner(NpcTypes.FARMER);
     private readonly Blackboard blackboard = new Blackboard();
-    private PlanExecutor planExecutor = new PlanExecutor(this);
+    private PlanExecutor planExecutor;
+
+    public FarmerNpc() {
+        this.planExecutor = new PlanExecutor(this);
+    }
 
     void Start() {
         AgentManager.AddAgent(this);
@@ -29,17 +33,25 @@ public class FarmerNpc : MonoBehaviour, Agent {
         }
         Debug.Log("\n");
 
-        this.planExecutor.AddNewPlan(plan);
+        this.planExecutor.AddNewPlan(new Stack<GoapAction>(plan));
     }
 
     public void OnFarmCommandIssued() {
         Building nearestPossibleFarm = BuildingSensor.FindNearest(BuildingTypes.FARM, this.transform);
         if (nearestPossibleFarm is Farm && nearestPossibleFarm is MonoBehaviour) {
             MonoBehaviour farmBehaviour = nearestPossibleFarm as MonoBehaviour;
-            currentAction = () => {
-                float step = this.speed * Time.deltaTime;
-                this.transform.position = Vector3.MoveTowards(this.transform.position, farmBehaviour.transform.position, step);
-            };
+            float step = this.speed * Time.deltaTime;
+            this.transform.position = Vector3.MoveTowards(this.transform.position, farmBehaviour.transform.position, step);
         }
+    }
+
+    public bool IsFarmCommandComplete() {
+        Building nearestPossibleFarm = BuildingSensor.FindNearest(BuildingTypes.FARM, this.transform);
+        if (nearestPossibleFarm is Farm && nearestPossibleFarm is MonoBehaviour) {
+            MonoBehaviour farmBehaviour = nearestPossibleFarm as MonoBehaviour;
+            Vector3 vectorToFarm = transform.position - farmBehaviour.transform.position;
+            return vectorToFarm.magnitude <= 1.0f;
+        }
+        return false;
     }
 }

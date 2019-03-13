@@ -228,6 +228,10 @@ class PlanExecutor {
         this.agent = agent;
     }
 
+    public bool HasPlan() {
+        return plan.Count > 0;
+    }
+
     public void AddNewPlan(Stack<GoapAction> plan) {
         this.plan.Clear();
         this.plan = plan;

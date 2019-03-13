@@ -13,6 +13,13 @@ public static class ActionPool {
         }, (agent) => {
             if (agent is FarmerNpc) {
                 FarmerNpc farmer = agent as FarmerNpc;
+                return farmer.IsFarmCommandComplete();
+            } else {
+                return false;
+            }
+        }, (agent) => {
+            if (agent is FarmerNpc) {
+                FarmerNpc farmer = agent as FarmerNpc;
                 farmer.OnFarmCommandIssued();
             }
         });
@@ -24,6 +31,8 @@ public static class ActionPool {
         }, 5, (agent) => {
             return true;
         }, (agent) => {
+            return true;
+        }, (agent) => {
 
         });
 
@@ -32,6 +41,8 @@ public static class ActionPool {
         }, new Dictionary<WorldStateVariables, object>() {
             { WorldStateVariables.HAS_HOUSE, true }
         }, 10, (agent) => {
+            return true;
+        }, (agent) => {
             return true;
         }, (agent) => {
 
@@ -50,6 +61,8 @@ public static class ActionPool {
         }, 5, (agent) => {
             return true;
         }, (agent) => {
+            return true;
+        }, (agent) => {
 
         });
 
@@ -58,6 +71,8 @@ public static class ActionPool {
         }, new Dictionary<WorldStateVariables, object>() {
             { WorldStateVariables.TARGET_IS_DEAD, true }
         }, 5, (agent) => {
+            return true;
+        }, (agent) => {
             return true;
         }, (agent) => {
 
