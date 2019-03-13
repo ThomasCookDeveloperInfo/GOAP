@@ -37,6 +37,20 @@ public static class BuildingSensor {
                 }
             }
             return closestFarm;
+        } else if (buildingType == BuildingTypes.SHOP) {
+            Shop closestShop = null;
+            foreach (Shop shop in shops) {
+                if (closestShop == null) {
+                    closestShop = shop;
+                } else {
+                    Vector3 vectorToClosestShop = transform.position - closestShop.transform.position;
+                    Vector3 vectorToShop = transform.position - shop.transform.position;
+                    if (vectorToShop.magnitude < vectorToClosestShop.magnitude) {
+                        closestShop = shop;
+                    }
+                }
+            }
+            return closestShop;
         }
         return null;
     }

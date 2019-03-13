@@ -31,9 +31,17 @@ public static class ActionPool {
         }, 5, (agent) => {
             return true;
         }, (agent) => {
-            return true;
+            if (agent is FarmerNpc) {
+                FarmerNpc farmer = agent as FarmerNpc;
+                return farmer.IsSellProduceCommandCompleted();
+            } else {
+                return false;
+            }
         }, (agent) => {
-
+            if (agent is FarmerNpc) {
+                FarmerNpc farmer = agent as FarmerNpc;
+                farmer.OnSellProduceCommandIssued();
+            }
         });
 
         GoapAction buyHouseAction = new GoapAction("BuyHouse", new Dictionary<WorldStateVariables, object>() {

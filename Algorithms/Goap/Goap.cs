@@ -238,14 +238,12 @@ class PlanExecutor {
     }
 
     public void Execute() {
-        if (this.agent == null) {
-            return;
-        }
-        
-        if (this.plan.Peek().IsComplete(agent)) {
-            this.plan.Pop();
-        } else {
-            this.plan.Peek().Continue(agent);
+        if (this.plan.Count > 0 && this.agent != null) {
+            if (this.plan.Peek().IsComplete(agent)) {
+                this.plan.Pop();
+            } else {
+                this.plan.Peek().Continue(agent);
+            }
         }
     }
 }
