@@ -54,4 +54,8 @@ public static class BuildingSensor {
         }
         return null;
     }
+
+    public static Vector3 FindNearestBuildSpot(BuildingTypes forBuildingTyope, Transform transform) {
+        return Vector3.zero;
+    }
 }

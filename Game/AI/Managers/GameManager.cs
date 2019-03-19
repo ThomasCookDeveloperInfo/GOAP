@@ -2,6 +2,6 @@
 
 public class GameManager : MonoBehaviour {
     void Update() {
-        AgentManager.Update();
+        NpcManager.Update();
     }
 }
