@@ -12,7 +12,6 @@ public class MercenaryNpc : MonoBehaviour, Npc, GoapAgent {
     private readonly Blackboard blackboard = new Blackboard();
     Blackboard GoapAgent.blackboard {
         get { return blackboard; }
-
     }
 
     public MercenaryNpc() {
@@ -35,7 +34,7 @@ public class MercenaryNpc : MonoBehaviour, Npc, GoapAgent {
 
     public void Plan() {
         Goal selectedGoal = GoalPool.GoalsFor(NpcType.MERCENARY).OrderBy(goal => goal.priority).ToList().FirstOrDefault();
-        List<GoapAction> plan = planner.Plan(ActionPool.ActionsFor, this.blackboard.worldState, selectedGoal.goalState).ToList();
+        List<GoapAction> plan = planner.Plan(ActionPool.ActionsFor, this.blackboard.worldState, selectedGoal.goalState).Where(action => action != null).ToList();
 
         StringBuilder sb = new StringBuilder("Planning finished. Path length: " + plan.Count + ", Path is: \n");
 
